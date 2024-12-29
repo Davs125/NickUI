@@ -1,0 +1,48 @@
+# ---------------------------------------------------------------------------
+# NickUI configuration
+# ---------------------------------------------------------------------------
+# This file allows you to predefine ranks, random names, and general settings.
+# 
+# ranks:
+#   Here you can set rankName -> prefix. 
+#   The "prefix" is what will appear in the chat before the player's name.
+#   You can add more ranks or modify these as you like.
+#
+# random_names:
+#   A list of possible random nicknames.
+#   If a player uses /nick random or doesn't specify a name, they get one
+#   random from here.
+#
+# default_rank:
+#   The rank a player reverts to when using /unnick.
+#
+# chat_format:
+#   How the chat will look when players speak. 
+#   Possible placeholders:
+#     {RANK_PREFIX}  -> The prefix of the player's current rank
+#     {DISPLAY_NAME} -> The player's display name
+#     {MESSAGE}      -> The player's message
+# ---------------------------------------------------------------------------
+
+ranks:
+  default:
+    prefix: "&7[Player]"
+  vip:
+    prefix: "&a[VIP]"
+  mod:
+    prefix: "&c[MOD]"
+  admin:
+    prefix: "&6[ADMIN]"
+
+random_names:
+  - NoobMaster
+  - Spartan
+  - ProGamer
+  - Davs
+  - SkyBridger
+  - Tanker
+  - Destroyer
+
+default_rank: "default"
+
+chat_format: "{RANK_PREFIX} {DISPLAY_NAME}: {MESSAGE}"

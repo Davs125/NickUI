@@ -1,0 +1,32 @@
+name: NickUI
+version: 1.0.0
+api: [5.0.0]
+main: SoyDavs\NickUI\Main
+depend: [FormAPI]
+
+commands:
+  nick:
+    description: Change your display name and rank
+    usage: "/nick"
+    permission: nickui.cmd.nick
+  unnick:
+    description: Revert to your real name and default rank
+    usage: "/unnick"
+    permission: nickui.cmd.unnick
+  realname:
+    description: Check the real name of a nicked player
+    usage: "/realname <player>"
+    permission: nickui.cmd.realname
+
+permissions:
+  nickui.cmd.nick:
+    description: Allows player to use the /nick command
+    default: op
+
+  nickui.cmd.unnick:
+    description: Allows player to use the /unnick command
+    default: op
+
+  nickui.cmd.realname:
+    description: Allows player to use the /realname command
+    default: op
