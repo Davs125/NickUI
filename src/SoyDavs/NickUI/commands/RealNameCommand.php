@@ -35,9 +35,9 @@ class RealNameCommand extends Command {
             return true;
         }
 
-        // Check if sender is a Player and is OP
+        // Check if sender is a Player and has OP permissions
         if ($sender instanceof Player) {
-            if (!$sender->isOp()) {
+            if (!$sender->hasPermission("pocketmine.permission.op")) {
                 $sender->sendMessage("§cYou do not have permission to use this command.");
                 return true;
             }
