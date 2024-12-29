@@ -14,34 +14,24 @@ class ChatListener implements Listener {
         $this->plugin = $plugin;
     }
 
-    public function onChat(PlayerChatEvent $event): void {
+    public function onPlayerChat(PlayerChatEvent $event): void {
         $player = $event->getPlayer();
         $message = $event->getMessage();
 
-        $data = $this->plugin->getPlayerNickData($player->getName());
-        $config = $this->plugin->getPluginConfig();
-        $chatFormat = $config->get("chat_format", "{RANK_PREFIX} {DISPLAY_NAME}: {MESSAGE}");
+        $nickData = $this->plugin->getPlayerNickData(strtolower($player->getName()));
+        if ($nickData !== null) {
+            $displayName = $nickData['displayName'] ?? $player->getName();
+            $rank = $nickData['rank'] ?? $this->plugin->getPluginConfig()->get("default_rank", "default");
+            $rankPrefix = $this->plugin->getPluginConfig()->get("ranks.$rank.prefix", "");
 
-        if($data !== null) {
-            $rankName = $data["rank"];
-            $ranks = $config->get("ranks", []);
-            $rankPrefix = $ranks[$rankName]["prefix"] ?? "";
-            $displayName = $data["displayName"];
-        } else {
-            $defaultRank = $config->get("default_rank", "default");
-            $ranks = $config->get("ranks", []);
-            $rankPrefix = $ranks[$defaultRank]["prefix"] ?? "";
-            $displayName = $player->getName();
+            // Replace color codes if necessary
+            $rankPrefix = str_replace('&', '§', $rankPrefix);
+
+            // Construct the new message format
+            $format = "{$rankPrefix} {$displayName}: {$message}";
+
+            // Set the new message format
+            $event->setMessage($format);
         }
-
-        $format = str_replace("{RANK_PREFIX}", $this->colorize($rankPrefix), $chatFormat);
-        $format = str_replace("{DISPLAY_NAME}", $displayName, $format);
-        $format = str_replace("{MESSAGE}", $message, $format);
-
-        $event->setFormat($format);
-    }
-
-    private function colorize(string $message): string {
-        return str_replace("&", "§", $message);
     }
 }
