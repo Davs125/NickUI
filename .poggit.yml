@@ -7,6 +7,5 @@ projects:
     path: ""
     icon: "https://i.ibb.co/DzBckd1/image.png"
     libs:
-      - src: "jojoe77777/FormAPI/FormAPI"
-        version: "^1.0.0"
-        branch: "main"
+      - src: jojoe77777/FormAPI/libFormAPI
+        version: ^2.1.1
