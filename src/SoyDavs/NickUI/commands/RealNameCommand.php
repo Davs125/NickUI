@@ -12,7 +12,7 @@ class RealNameCommand extends Command {
     private Main $plugin;
 
     public function __construct(Main $plugin) {
-        parent::__construct("realname", "Check the real name of a nicked player", "/realname <player>", []);
+        parent::__construct("realname", "View a player's real name", "/realname <player>", []);
         $this->setPermission("nickui.cmd.realname");
         $this->plugin = $plugin;
     }
@@ -22,25 +22,29 @@ class RealNameCommand extends Command {
             return true;
         }
 
-        if (!$sender->isOp()) {
-            $sender->sendMessage("§cOnly OPs can use this command.");
-            return true;
-        }
-
-        if (!isset($args[0])) {
+        if (count($args) < 1) {
             $sender->sendMessage("Usage: /realname <player>");
+            return false;
+        }
+
+        $targetName = strtolower(array_shift($args));
+        $nickData = $this->plugin->getPlayerNickData($targetName);
+
+        if ($nickData === null) {
+            $sender->sendMessage("§cPlayer not found or does not have a nickname.");
             return true;
         }
 
-        $targetDisplayName = $args[0];
-        $realName = $this->plugin->getRealNameByDisplay($targetDisplayName);
-
-        if ($realName === null) {
-            $sender->sendMessage("§cNo nicked player found with display name §f{$targetDisplayName}.");
-        } else {
-            $sender->sendMessage("§aThe real name of §f{$targetDisplayName} §ais §f{$realName}.");
+        // Check if sender is a Player and is OP
+        if ($sender instanceof Player) {
+            if (!$sender->isOp()) {
+                $sender->sendMessage("§cYou do not have permission to use this command.");
+                return true;
+            }
         }
 
+        $realName = $nickData['realName'] ?? $targetName;
+        $sender->sendMessage("§aThe real name of §f{$targetName}§a is §f{$realName}§a.");
         return true;
     }
 }
