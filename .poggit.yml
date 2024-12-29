@@ -1,22 +1,12 @@
-# Poggit-CI Manifest for NickUI
+# Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/Davs125/NickUI
 build-by-default: true
-
 branches:
   - main
-
 projects:
-  - name: "NickUI"
-    main: "src/SoyDavs/NickUI/Main.php"
-    dependencies:
-      - "jojoe77777/FormAPI"
-    loader: "phar"
-    files:
-      - "plugin.yml"
-      - "composer.json"
-      - "src/"
-      - "vendor/"
-      - "resources/"
-      - "config.yml"
-    phar:
-      stub: "vendor/autoload.php"
-      output: "NickUI.phar"
+  NickUI:
+    path: ""
+    icon: "https://i.ibb.co/DzBckd1/image.png"
+    libs:
+      - src: "jojoe77777/FormAPI/FormAPI"
+        version: "^1.0.0"
+        branch: "main"
