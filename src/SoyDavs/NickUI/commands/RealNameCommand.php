@@ -5,6 +5,7 @@ namespace SoyDavs\NickUI\commands;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
+use pocketmine\Server;
 use SoyDavs\NickUI\Main;
 
 class RealNameCommand extends Command {
@@ -37,7 +38,7 @@ class RealNameCommand extends Command {
 
         // Check if sender is a Player and has OP permissions
         if ($sender instanceof Player) {
-            if (!$sender->hasPermission("pocketmine.permission.op")) {
+            if (!Server::getInstance()->isOp($sender->getName())) {
                 $sender->sendMessage("§cYou do not have permission to use this command.");
                 return true;
             }
